@@ -1,6 +1,8 @@
-import { cart, removeFromCart} from "../data/cart.js";
+import { cart, removeFromCart, updateQuantity} from "../data/cart.js";
 import {products} from '../data/products.js';
 import { currencyFormatter } from './utils/money.js';
+
+updateQuantity();
 
 let cartItems = '';
 
@@ -103,5 +105,6 @@ document.querySelectorAll('.js-delete-quantity-link')
           removeFromCart(productId);
           const container = document.querySelector(`.js-cart-item-container-${productId}`);
           container.remove();
-      })
+          updateQuantity();
+        })
   })

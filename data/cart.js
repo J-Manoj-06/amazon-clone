@@ -45,3 +45,25 @@ export function removeFromCart(productId){
   cart = newCart;
   toStoreCart();
 }
+
+export function updateQuantity(){
+
+        let cartQuantity = 0;
+        cart.forEach((item)=>{
+            cartQuantity += item.quantity;
+        });
+        localStorage.setItem('cartQuantity',JSON.stringify(cartQuantity));
+        const cartQuantityElement = document.querySelector('.js-cart-quantity');
+
+        if(cartQuantityElement){
+          document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+        }
+
+        const displayCartQuantityElement = document.querySelector('.js-display-cart-quantity');
+        
+        if(displayCartQuantityElement){
+          document.querySelector('.js-display-cart-quantity')
+           .innerHTML = `${cartQuantity} items`;
+        }
+        console.log(cart);
+}
