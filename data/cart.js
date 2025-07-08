@@ -13,6 +13,17 @@ if(!cart){
 ];
 }
 
+export function updateDeliveryOption(productId, deliveryOptionId){
+  let matching;
+    cart.forEach((item)=>{
+        if(productId === item.productId){
+          matching = item;
+        }
+    })
+    matching.deliveryOptionsId = deliveryOptionId;
+    toStoreCart();
+}
+
 function toStoreCart(){
   localStorage.setItem('cart',JSON.stringify(cart));
 }
