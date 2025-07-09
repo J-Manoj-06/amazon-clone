@@ -78,7 +78,10 @@ export function updateQuantity(){
         if(displayCartQuantityElement){
           document.querySelector('.js-display-cart-quantity')
            .innerHTML = `${cartQuantity} items`;
+          document.querySelector('.js-payment-summary-item-count')
+            .innerHTML = `Items (${cartQuantity}):`;
         }
+
         console.log(cart);
 }
 
