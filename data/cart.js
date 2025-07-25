@@ -1,3 +1,6 @@
+import { deliveryOptions } from "./deliveryOptions.js";
+import { products } from "./products.js";
+
 export let cart = JSON.parse(localStorage.getItem('cart'));
 if(!cart){
   cart = [
@@ -60,12 +63,17 @@ export function removeFromCart(productId){
   toStoreCart();
 }
 
-export function updateQuantity(){
-
-        let cartQuantity = 0;
+export function calculateCartQuantity(){
+  let cartQuantity = 0;
         cart.forEach((item)=>{
             cartQuantity += item.quantity;
         });
+      return cartQuantity;
+}
+
+export function updateQuantity(){
+
+        let cartQuantity = calculateCartQuantity();
         localStorage.setItem('cartQuantity',JSON.stringify(cartQuantity));
         const cartQuantityElement = document.querySelector('.js-cart-quantity');
 
@@ -78,11 +86,7 @@ export function updateQuantity(){
         if(displayCartQuantityElement){
           document.querySelector('.js-display-cart-quantity')
            .innerHTML = `${cartQuantity} items`;
-          document.querySelector('.js-payment-summary-item-count')
-            .innerHTML = `Items (${cartQuantity}):`;
         }
-
-        console.log(cart);
 }
 
 export function updateCartQuantity(productId, quantity){
@@ -96,4 +100,32 @@ export function updateCartQuantity(productId, quantity){
           }
         updateQuantity();
         toStoreCart();
+}
+
+export function calculateTotalAmount(){
+  let matching;
+  let total =0;
+  cart.forEach((item)=>{
+    products.forEach((product)=>{
+      if(item.productId === product.id){
+        matching = product;
+      }
+    });
+    total += (item.quantity * matching.priceCents);
+  });
+  return total;
+}
+
+export function deliveryCharge(){
+  let charge = 0;
+  let matching;
+  cart.forEach((item)=>{
+    deliveryOptions.forEach((option)=>{
+      if(item.deliveryOptionsId === option.id){
+        matching = option;
+      }
+    });
+    charge +=matching.priceCents;
+  });
+  return charge;
 }

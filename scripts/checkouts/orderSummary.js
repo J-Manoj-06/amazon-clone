@@ -3,6 +3,7 @@ import { cart, removeFromCart, updateCartQuantity, updateQuantity, updateDeliver
 import { products } from '../../data/products.js';
 import { currencyFormatter } from '../utils/money.js';
 import { deliveryOptions } from "../../data/deliveryOptions.js";
+import { renderPaymentSummary } from "./paymentSummary.js";
 
 updateQuantity();
 
@@ -95,11 +96,13 @@ export function renderCheckout(){
                     : `$${currencyFormatter(deliveryOption.priceCents)}`;
 
           const isChecked = deliveryOption.id === cartItem.deliveryOptionsId ? 'checked' : '';
-            console.log(productId); 
-          html+=
+
+           html+=
           
           `
               <div class="delivery-option js-select-delivery-date" 
+
+              ${renderPaymentSummary()}
               data-product-id="${productId}" data-delivery-option-id="${deliveryOption.id}">
                 <input type="radio" 
                     ${isChecked}
@@ -130,6 +133,7 @@ export function renderCheckout(){
             const container = document.querySelector(`.js-cart-item-container-${productId}`);
             container.remove();
             updateQuantity();
+            renderPaymentSummary();
           })
         })
 
@@ -163,6 +167,7 @@ export function renderCheckout(){
               `.js-cart-item-container-${productId}`
             );
             container.classList.remove('is-editing-quantity');
+            renderCheckout();
           });
         });
 
