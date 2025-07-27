@@ -1,5 +1,6 @@
-import { renderCheckout } from "./checkouts/orderSummary.js";
-import { renderPaymentSummary } from "./checkouts/paymentSummary.js";
+import {renderOrderSummary} from './checkout/orderSummary.js';
+import {renderPaymentSummary} from './checkout/paymentSummary.js';
+// import '../data/cart-class.js';
 
-renderCheckout();
+renderOrderSummary();
 renderPaymentSummary();
